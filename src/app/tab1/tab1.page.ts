@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular'; 
 
 @Component({
   selector: 'app-tab1',
@@ -26,10 +28,17 @@ export class Tab1Page {
       quantity: 10
     },
   ];
-  constructor() {}
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
 
-  removeItem(item) {
-    console.log("Removing Item -", item)
+  }
+
+  async removeItem(item) {
+    console.log("Removing Item -", item); 
+    const toast = await this.toastCtrl.create({
+      message: 'Removing Item -' + item.name + "...", 
+      duration: 3000
+    }); 
+    await toast.present(); 
   }
 
 }
