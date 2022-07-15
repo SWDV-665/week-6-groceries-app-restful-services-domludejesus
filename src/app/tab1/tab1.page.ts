@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ToastController } from '@ionic/angular'; 
+import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular'; 
 
 @Component({
   selector: 'app-tab1',
@@ -28,7 +29,9 @@ export class Tab1Page {
       quantity: 10
     },
   ];
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, 
+              public toastCtrl: ToastController, 
+              public alertCtrl: AlertController, ) {
 
   }
 
@@ -41,6 +44,30 @@ export class Tab1Page {
     await toast.present(); 
   }
 
+  async addItem() {
+    const alert = await this.alertCtrl.create({
+      header: 'Add Item',
+      buttons: ['OK'], 
+      inputs: [
+        {
+          type: 'text',
+          placeholder: 'Name'
+        },
+        {
+          type: 'number',
+          placeholder: 'Quantity',
+          min: 1,
+          max: 100
+        },
+        {
+          text: 'Save', 
+          handler
+        },
+      ]
+    });
+
+    await alert.present();
+  }
 }
 
 
