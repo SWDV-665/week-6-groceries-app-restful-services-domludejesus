@@ -48,6 +48,60 @@ export class Tab1Page {
 
   }
 
+  async editItem(item, index) {
+    console.log("Edit Item -", item, index);
+    const toast = await this.toastCtrl.create({
+      message: 'Editing Item -' + index + "...",
+      duration: 3000
+
+    });
+    await toast.present();
+    this.showEditItemPrompt(item, index)
+
+
+  }
+
+  async showEditItemPrompt(item, index) {
+    const alert = await this.alertCtrl.create({
+      header: 'Edit Item',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Name',
+          value: item.name
+        },
+        {
+          name: 'quantity',
+          placeholder: 'Quantity',
+          min: 1,
+          max: 100,
+          value: item.quantity
+        },
+
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'Cancel',
+          handler: data => {
+            console.log('Cancel Clicked')
+
+          }
+        },
+
+        {
+          text: 'Save',
+          handler: item => {
+            console.log('Saved Clicked', item)
+            this.items[index] = item;
+          }
+        }
+      ],
+
+    });
+
+    await alert.present();
+  }
   async addItem() {
     console.log("Adding Item");
     this.showAddItemPrompt();
@@ -93,6 +147,7 @@ export class Tab1Page {
     await alert.present();
   }
 }
+
 
 
 
