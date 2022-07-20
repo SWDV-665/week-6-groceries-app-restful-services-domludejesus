@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { GroceriesServiceService } from '../groceries-service.service';
 
 @Component({
   selector: 'app-tab1',
@@ -31,7 +32,8 @@ export class Tab1Page {
   ];
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
-    public alertCtrl: AlertController,) {
+    public alertCtrl: AlertController,
+    public dataService: GroceriesServiceService) {
 
   }
 
