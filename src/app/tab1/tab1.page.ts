@@ -8,33 +8,22 @@ import { GroceriesServiceService } from '../groceries-service.service';
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
+  //providers: [GroceriesServiceService]
 })
 export class Tab1Page {
   title = "Grocery List";
 
-  items = [
-    {
-      name: "Milk",
-      quantity: 2
-    },
-    {
-      name: "Bread",
-      quantity: 5
-    },
-    {
-      name: "Banana",
-      quantity: 6
-    },
-    {
-      name: "Sugar",
-      quantity: 10
-    },
-  ];
+
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public dataService: GroceriesServiceService) {
 
+  }
+
+  loadItems() {
+    //return this.dataService.getItems;
+    return this.dataService.items;
   }
 
   async removeItem(item, index) {
@@ -45,7 +34,7 @@ export class Tab1Page {
 
     });
     await toast.present();
-    await this.items.splice(index, 1);
+    this.dataService.removeItem(index);
 
 
   }
@@ -94,8 +83,8 @@ export class Tab1Page {
         {
           text: 'Save',
           handler: item => {
-            console.log('Saved Clicked', item)
-            this.items[index] = item;
+            console.log('Saved Clicked', item);
+            this.dataService.editItem(item, index);
           }
         }
       ],
@@ -138,8 +127,9 @@ export class Tab1Page {
         {
           text: 'Save',
           handler: item => {
-            console.log('Saved Clicked', item)
-            this.items.push(item);
+            console.log('Saved Clicked', item);
+            this.dataService.addItem(item);
+
           }
         }
       ],
