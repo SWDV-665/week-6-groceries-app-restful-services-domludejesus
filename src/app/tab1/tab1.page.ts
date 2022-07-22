@@ -52,91 +52,10 @@ export class Tab1Page {
 
   }
 
-  async showEditItemPrompt(item, index) {
-    const alert = await this.alertCtrl.create({
-      header: 'Edit Item',
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Name',
-          value: item.name
-        },
-        {
-          name: 'quantity',
-          placeholder: 'Quantity',
-          min: 1,
-          max: 100,
-          value: item.quantity
-        },
 
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'Cancel',
-          handler: data => {
-            console.log('Cancel Clicked')
-
-          }
-        },
-
-        {
-          text: 'Save',
-          handler: item => {
-            console.log('Saved Clicked', item);
-            this.dataService.editItem(item, index);
-          }
-        }
-      ],
-
-    });
-
-    await alert.present();
-  }
   async addItem() {
     console.log("Adding Item");
     this.showAddItemPrompt();
-  }
-
-  async showAddItemPrompt() {
-    const alert = await this.alertCtrl.create({
-      header: 'Add Item',
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Name'
-        },
-        {
-          name: 'quantity',
-          placeholder: 'Quantity',
-          min: 1,
-          max: 100
-        },
-
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'Cancel',
-          handler: data => {
-            console.log('Cancel Clicked')
-
-          }
-        },
-
-        {
-          text: 'Save',
-          handler: item => {
-            console.log('Saved Clicked', item);
-            this.dataService.addItem(item);
-
-          }
-        }
-      ],
-
-    });
-
-    await alert.present();
   }
 }
 
