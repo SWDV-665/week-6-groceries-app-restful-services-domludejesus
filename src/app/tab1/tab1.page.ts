@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { GroceriesServiceService } from '../groceries-service.service';
+import { InputDialogServiceService } from '../input-dialog-service.service';
 
 @Component({
   selector: 'app-tab1',
@@ -17,7 +18,8 @@ export class Tab1Page {
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public dataService: GroceriesServiceService) {
+    public dataService: GroceriesServiceService,
+    public inputDialogService: InputDialogServiceService) {
 
   }
 
@@ -47,7 +49,7 @@ export class Tab1Page {
 
     });
     await toast.present();
-    this.showEditItemPrompt(item, index)
+    this.inputDialogService.showPrompt(item, index)
 
 
   }
@@ -55,7 +57,7 @@ export class Tab1Page {
 
   async addItem() {
     console.log("Adding Item");
-    this.showAddItemPrompt();
+    this.inputDialogService.showPrompt();
   }
 }
 

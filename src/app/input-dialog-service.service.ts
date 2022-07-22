@@ -3,9 +3,6 @@ import { AlertController } from '@ionic/angular';
 import { GroceriesServiceService } from './groceries-service.service'
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
 })
 
 @Injectable({
@@ -15,22 +12,26 @@ export class InputDialogServiceService {
 
   constructor(public alertCtrl: AlertController,
     public dataService: GroceriesServiceService) { }
-
-  async showEditItemPrompt(item, index) {
+  // parameters optional with Terneary operator 
+  async showPrompt(item?, index?) {
     const alert = await this.alertCtrl.create({
-      header: 'Edit Item',
+      // if item is passed then we know its an edit item 
+      header: item ? 'Edit Item' : 'Add Item',
+      message: item ? "Please edit line..." : "Please enter item...",
       inputs: [
         {
           name: 'name',
           placeholder: 'Name',
-          value: item.name
+          // if item is passed we can then continue if not null 
+          value: item ? item.name : null
         },
         {
           name: 'quantity',
           placeholder: 'Quantity',
           min: 1,
           max: 100,
-          value: item.quantity
+          // if item is passed get the quantity or  if not null 
+          value: item ? item.quantity : null
         },
 
       ],
@@ -48,7 +49,13 @@ export class InputDialogServiceService {
           text: 'Save',
           handler: item => {
             console.log('Saved Clicked', item);
-            this.dataService.editItem(item, index);
+            // if item is found then use edit if not use add
+            if (index !== undefined) {
+              this.dataService.editItem(item, index);
+            } else {
+              this.dataService.addItem(item)
+            }
+
           }
         }
       ],
