@@ -25,11 +25,13 @@ export class InputDialogServiceService {
           // if item is passed we can then continue if not null 
           value: item ? item.name : null
         },
+
         {
+          type: 'number',
           name: 'quantity',
           placeholder: 'Quantity',
           min: 1,
-          max: 100,
+          max: 10,
           // if item is passed get the quantity or  if not null 
           value: item ? item.quantity : null
         },
