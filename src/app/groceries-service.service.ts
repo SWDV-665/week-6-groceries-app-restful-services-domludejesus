@@ -6,22 +6,6 @@ import { Injectable } from '@angular/core';
 export class GroceriesServiceService {
 
   items = [
-    {
-      name: "Milk",
-      quantity: 2
-    },
-    {
-      name: "Bread",
-      quantity: 5
-    },
-    {
-      name: "Banana",
-      quantity: 6
-    },
-    {
-      name: "Sugar",
-      quantity: 10
-    },
   ];
 
   // getItems() {
