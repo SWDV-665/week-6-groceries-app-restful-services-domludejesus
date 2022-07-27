@@ -41,6 +41,18 @@ export class Tab1Page {
 
   }
 
+  async shareItem(item, index) {
+    console.log("Sharing Item -", item, index);
+    const toast = await this.toastCtrl.create({
+      message: 'Sharing Item -' + index + "...",
+      duration: 3000
+
+    });
+    await toast.present();
+
+
+  }
+
   async editItem(item, index) {
     console.log("Edit Item -", item, index);
     const toast = await this.toastCtrl.create({
