@@ -4,7 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { GroceriesServiceService } from '../groceries-service.service';
 import { InputDialogServiceService } from '../input-dialog-service.service';
-
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -19,7 +19,8 @@ export class Tab1Page {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public dataService: GroceriesServiceService,
-    public inputDialogService: InputDialogServiceService) {
+    public inputDialogService: InputDialogServiceService,
+    public socialSharing: SocialSharing) {
 
   }
 
@@ -49,6 +50,17 @@ export class Tab1Page {
 
     });
     await toast.present();
+
+    let message = "Grocery Item - Name: " + item.name + " - Quantity: " + item.quantity;
+    let subject = "Shared via Groceries App";
+
+    this.socialSharing.share(message, subject).then(() => {
+      // Sharing via email is possible
+      console.log("Shared Successfully!");
+    }).catch((error) => {
+      // Sharing via email is not possible
+      console.log("Error While Sharing", error);
+    });
 
 
   }
