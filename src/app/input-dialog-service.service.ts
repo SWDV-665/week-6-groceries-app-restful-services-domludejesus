@@ -1,5 +1,5 @@
 import { Component, Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonItem } from '@ionic/angular';
 import { GroceriesServiceService } from './groceries-service.service'
 
 @Component({
@@ -11,7 +11,9 @@ import { GroceriesServiceService } from './groceries-service.service'
 export class InputDialogServiceService {
 
   constructor(public alertCtrl: AlertController,
-    public dataService: GroceriesServiceService) { }
+    public dataService: GroceriesServiceService) {
+    console.log('Hello Input Dialog Service Provider')
+  }
   // parameters optional with Terneary operator 
   async showPrompt(item?, index?) {
     const alert = await this.alertCtrl.create({
@@ -95,10 +97,15 @@ export class InputDialogServiceService {
 
         {
           text: 'Save',
-          handler: item => {
-            console.log('Saved Clicked', item);
-            this.dataService.addItem(item);
-
+          handler: data => {
+            console.log('Saved Handler', data);
+            if (index !== undefined) {
+              item.name = data.name;
+              item.quantity = data.quantity;
+              this.dataService.editItem(item, index);
+            } else {
+              this.dataService.addItem(data);
+            }
           }
         }
       ],

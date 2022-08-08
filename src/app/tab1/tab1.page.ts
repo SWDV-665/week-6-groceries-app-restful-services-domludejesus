@@ -12,7 +12,10 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
   //providers: [GroceriesServiceService]
 })
 export class Tab1Page {
-  title = "Grocery List";
+  title = "Grocery";
+
+  items = [];
+  errorMessage: string;
 
 
   constructor(public navCtrl: NavController,
@@ -20,32 +23,34 @@ export class Tab1Page {
     public alertCtrl: AlertController,
     public dataService: GroceriesServiceService,
     public inputDialogService: InputDialogServiceService,
-    public socialSharing: SocialSharing) {
+    public socialSharing: SocialSharing,) {
+    dataService.dataChanged$.subscribe((dataChanged: boolean) => {
+      this.loadItems();
+    });
 
+  }
+
+  ionViewDidLoad() {
+    this.loadItems();
   }
 
   loadItems() {
     //return this.dataService.getItems;
-    return this.dataService.items;
+    // return this.dataService.items;
+    this.dataService.getItems()
+      .subscribe(
+        items => this.items,
+        error => this.errorMessage = <any>error);
   }
 
-  async removeItem(item, index) {
-    console.log("Removing Item -", item, index);
-    const toast = await this.toastCtrl.create({
-      message: 'Removing Item -' + index + "...",
-      duration: 3000
-
-    });
-    await toast.present();
-    this.dataService.removeItem(index);
-
-
+  async removeItem(id) {
+    this.dataService.removeItem(id);
   }
 
-  async shareItem(item, index) {
-    console.log("Sharing Item -", item, index);
+  async shareItem(item) {
+    console.log("Sharing Item -", item);
     const toast = await this.toastCtrl.create({
-      message: 'Sharing Item -' + index + "...",
+      message: 'Sharing Item -' + item.name + "...",
       duration: 3000
 
     });
@@ -65,7 +70,7 @@ export class Tab1Page {
 
   }
 
-  async editItem(item, index) {
+  async editItem(item: any, index: any) {
     console.log("Edit Item -", item, index);
     const toast = await this.toastCtrl.create({
       message: 'Editing Item -' + index + "...",
@@ -74,8 +79,6 @@ export class Tab1Page {
     });
     await toast.present();
     this.inputDialogService.showPrompt(item, index)
-
-
   }
 
 
